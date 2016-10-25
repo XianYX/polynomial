@@ -32,7 +32,7 @@ public:
 	Term(const Term & t);
 	~Term();
 	//bool cmp(var a, var b);
-	bool eval(string v,int x);
+	bool eval(string& v,int x);
 	void NewVar(string v, int exp);
 	bool AllExpIsZero();
 	
@@ -62,7 +62,7 @@ Term::~Term()
 
 
 
-bool Term::eval(string v,int x)
+bool Term::eval(string& v,int x)
 {
 	int result = 1;
 	for (int i = 0; i < varnums; i++)
@@ -83,7 +83,6 @@ bool Term::eval(string v,int x)
 
 void Term::NewVar(string v, int exp)
 {
-	int i;
 	if (varArray.empty())
 	{
 		var *temp;
@@ -97,7 +96,7 @@ void Term::NewVar(string v, int exp)
 	}
 	else
 	{
-		for (i = 0; i < this->varnums; i++)
+		for (int i = 0; i < this->varnums; i++)
 		{
 			if (this->varArray[i].v == v)
 			{
@@ -142,7 +141,7 @@ public:
 	void NewTerm( Term & term);
 	void eval(string v,int x);   //代入求值
 	void display();
-	void derivative(string v);
+	void derivative(string& v);
 private:
 	Term *termArray;   //非零系数项数组
 	int capacity;      //项的数组大小
@@ -195,7 +194,6 @@ bool Polynomial::match(Term & a, Term & b)     //匹配单项式
 }
 void Polynomial::NewTerm( Term & term)
 {
-	int i;
 	if (this->terms == 0)
 	{
 		this->terms++;
@@ -204,6 +202,7 @@ void Polynomial::NewTerm( Term & term)
 	}
 	else
 	{
+		int i;
 		for (i = 0; i < this->terms; i++)
 		{
 			if (match(this->termArray[i], term))     //匹配成功
@@ -230,7 +229,7 @@ void Polynomial::eval(string v, int x)
 		cout << "Error, no variable" << endl;
 }
 
-void Polynomial::derivative(string v)
+void Polynomial::derivative(string& v)
 {
 	bool flag1 = 0;
 	for (int i = 0; i < this->terms; i++)
@@ -240,8 +239,8 @@ void Polynomial::derivative(string v)
 		{
 			if (this->termArray[i].varArray[j].v == v)
 			{
-				flag1 = (flag1 | 1);
-				flag2 = (flag2 | 1);
+				flag1 = (flag1 & 1);
+				flag2 = (flag2 & 1);
 				if (this->termArray[i].varArray[j].exp >= 1)
 				{
 					this->termArray[i].coef *= this->termArray[i].varArray[j].exp;
