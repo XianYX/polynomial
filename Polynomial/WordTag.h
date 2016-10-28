@@ -57,17 +57,18 @@ Polynomial * expression(string s)
 			return NULL;
 		}		
 	}
-	int pos,j;
+
 	int sum;
 	Polynomial* p;
 	p = new Polynomial;
 	a.clear();
 	b.clear();
 	MySplite(s);
+
 	for (int i = 0; i < a.size(); i++)
 	{
+		int pos, j;
 		pos = 0;
-		
 		Term *t;
 		t = new Term;
 		a[i] += '*';

@@ -8,7 +8,6 @@
 using namespace std;
 int main()
 {
-	int flag = -1;
 	string pol;
 	Polynomial *p = NULL;                                     //表达式直接输入，指令输入以“！”作为开头，                             
 	Polynomial *temp = NULL;	
